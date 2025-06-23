@@ -193,7 +193,7 @@ REQUEST: foreach my $req ( @{ $data->{'ill_requests'} } ) {
     if ( ( $mode && $mode eq 'outgoing' ) || ( $req->{ 'active_library' } ne $ill_config->{ 'libris_sigil' } ) ) {
 
         # The loan is requested by one of our own patrons, so we look up the borrowernumber from the cardnumber
-        if ( $req->{'user_id'} ) {
+        if ( $req->{'user_id'} && $req->{'user_id'} ne '' ) {
             my $userid = $req->{'user_id'};
             $userid =~ s/ //g;
             # FIXME Do more checking of the user_id?

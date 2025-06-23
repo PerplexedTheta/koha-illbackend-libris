@@ -1281,14 +1281,22 @@ sub userid2borrower {
     my $ill_config_file = C4::Context->config('interlibrary_loans')->{'libris_config'};
     my $ill_config = LoadFile( $ill_config_file );
 
+    # Cardnumber is default field to look in
+    my $id_field = 'cardnumber';
+
     # Make sure we have a user ID to look up
     chomp $user_id;
-    return $ill_config->{ 'unknown_patron' } unless $user_id;
-    return $ill_config->{ 'unknown_patron' } if $user_id eq '';
+    unless ( $user_id ) {
+        $user_id = $ill_config->{ 'unknown_patron' };
+        $id_field = 'borrowernumber';
+    }
+    if ( $user_id eq '' ) {
+        $user_id = $ill_config->{ 'unknown_patron' };
+        $id_field = 'borrowernumber';
+    }
 
     # Look up the patron, based on cardnumber as default, or another identifier
     # specified in the ILL config
-    my $id_field = 'cardnumber';
     if ( $ill_config->{ 'patron_id_field' } && $ill_config->{ 'patron_id_field' } ne '' ) {
         $id_field = $ill_config->{ 'patron_id_field' };
     }
