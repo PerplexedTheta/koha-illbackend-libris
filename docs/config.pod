@@ -99,6 +99,10 @@ items created by the ILL processes.
 =item * B<ill_notforloan> - A notforloan code that will be set on all
 items created by the ILL processes. (Default 0.)
 
+=item * B<partner_code> - categorycode for a patron category that lending
+libraries are added to when data about them is fatched from Libris and they
+are added to Koha.
+
 =item * B<update_library_data> - Data about ILL partner libraries is retrieved
 from Libris. If a library has not been seen before, its data is saved as a new
 patron in Koha. If update_library_data = 0, saved libraries are B<not> updated
@@ -189,6 +193,7 @@ Example:
   ill_itemtype: FJARRLAN
   ill_closed_itemtype: FJARRLANX
   ill_callnumber: Fjärrlån
+  partner_code: FJARRLAN
   update_library_data: 0
   close_article_request_on_receive: 0
   delete_article_request_on_close: 0
@@ -203,6 +208,7 @@ Example:
     x: y
   item_level_holds: 1
   item_homebranch_equals_ill_branch: 1
+  date_due_period: due_date_guar
   reminders:
     Lån:
       - days_after: 0
@@ -218,7 +224,6 @@ Example:
         letter_code: ILL_ANK_K2
       - days_after: 21
         letter_code: ILL_ANK_K3
-  date_due_period: due_date_guar
 
 =head2 Notices
 
